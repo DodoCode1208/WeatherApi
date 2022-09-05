@@ -7,6 +7,15 @@ using WeatherApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
+//Retrieve the connection string from the secrets manager for Azure App Configuration Service
+var connectionString = builder.Configuration.GetConnectionString("AppConfig");
+
+builder.Host.ConfigureAppConfiguration(config =>
+{
+      // Get configurations from App Configuration Store
+      config.AddAzureAppConfiguration(connectionString);
+});
+
 // Add services to the container.
 
 builder.Services.AddEndpointsApiExplorer();
